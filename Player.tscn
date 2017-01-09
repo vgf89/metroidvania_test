@@ -1,0 +1,100 @@
+[gd_scene load_steps=7 format=1]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://tilemap.png" type="Texture" id=2]
+[ext_resource path="res://SwordCollider.gd" type="Script" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 32, 32 )
+
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[node name="Player" type="KinematicBody2D"]
+
+transform/pos = Vector2( 400, 368 )
+transform/scale = Vector2( 0.5, 0.5 )
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+GRAVITY = 500.0
+WALK_SPEED = 200.0
+JUMP_SPEED = 200.0
+
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+region = true
+region_rect = Rect2( 64, 0, 32, 32 )
+
+[node name="RayCast2DRight" type="RayCast2D" parent="."]
+
+transform/pos = Vector2( 32, 0 )
+enabled = true
+cast_to = Vector2( 0, 33 )
+layer_mask = 1
+type_mask = 15
+
+[node name="RayCast2DLeft" type="RayCast2D" parent="."]
+
+transform/pos = Vector2( -32, 0 )
+enabled = true
+cast_to = Vector2( 0, 33 )
+layer_mask = 1
+type_mask = 15
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Sword" type="Area2D" parent="."]
+
+transform/pos = Vector2( 64, 24 )
+transform/scale = Vector2( 1, 1.5 )
+input/pickable = false
+shapes/0/shape = SubResource( 2 )
+shapes/0/transform = Matrix32( 3.15385, 0, 0, 2.34615, -0.999994, -17.5 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision/layers = 0
+collision/mask = 2
+script/script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Sword"]
+
+transform/pos = Vector2( 0, -16 )
+transform/scale = Vector2( 1, 0.666667 )
+texture = ExtResource( 4 )
+
+[node name="Hitbox" type="CollisionShape2D" parent="Sword"]
+
+transform/pos = Vector2( -0.999994, -17.5 )
+transform/scale = Vector2( 3.15385, 2.34615 )
+shape = SubResource( 2 )
+trigger = false
+_update_shape_index = 0
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+process_mode = 0
+wait_time = 0.2
+one_shot = false
+autostart = false
+
+
