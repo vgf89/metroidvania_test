@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 var start_pos = get_pos()
 
+export var health = 10
 export var GRAVITY = 200.0
 export var WALK_SPEED = 200.0
 export var JUMP_SPEED = 300.0

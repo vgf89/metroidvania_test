@@ -1,13 +1,20 @@
 extends KinematicBody2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+export var maxHealth = 10
+var health = maxHealth
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
 	pass
 	
-func takedamage():
-	print(get_name(), " ow")
+func takedamage(damage):
+	print(get_name(), "Take %s damage,"%damage, "new health = %s"%(health - damage))
+	health -= damage
+	if (health <= 0):
+		kill()
+
+func kill():
+	self.hide()
+	self.set_collision_mask(0)
+	self.set_layer_mask(0)
+	self.queue_free()
+	
